@@ -75,11 +75,6 @@ print("Sample Prediction:", sample_prediction)
 ![image](https://github.com/user-attachments/assets/24e06126-ffb3-4ca4-b0ce-2daaf0990d3f)
 ![image](https://github.com/user-attachments/assets/d68d05c8-64d7-4c35-88c6-2b1dc768671c)
 
-## Result:
-Thus the program to implement the the Logistic Regression Model to Predict the Placement Status of Student is written and verified using python programming.
-
-
-
 
 ## Result:
 Thus the program to implement the the Logistic Regression Model to Predict the Placement Status of Student is written and verified using python programming.
