@@ -1,4 +1,4 @@
-# Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student
+![image](https://github.com/user-attachments/assets/09c292aa-e16b-47fa-8ef1-7835e4c0252c)# Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student
 
 ## AIM:
 To write a program to implement the the Logistic Regression Model to Predict the Placement Status of Student.
@@ -21,83 +21,63 @@ To write a program to implement the the Logistic Regression Model to Predict the
  
 
 ## Program:
-```
-/*
+```/*
 Program to implement the the Logistic Regression Model to Predict the Placement Status of Student.
-Developed by: Tharshan
-RegisterNumber: 212223223004
-*/
+Developed by: Tharshan.R
+RegisterNumber:  212223233002
 ```
-```import pandas as pd 
-import numpy as np 
-import matplotlib.pyplot as plt 
+```
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, classification_report
 
-data = pd.read_csv('Placement_Data.csv') 
-data = data.drop('sl_no', axis=1) 
-data = data.drop('salary', axis=1) 
+data = pd.read_csv("/content/Placement_Data.csv")
 
-data["gender"] = data["gender"].astype('category') 
-data["ssc_b"] = data["ssc_b"].astype('category') 
-data["hsc_b"] = data["hsc_b"].astype('category') 
-data["degree_t"] = data["degree_t"].astype('category') 
-data["workex"] = data["workex"].astype('category') 
-data["specialisation"] = data["specialisation"].astype('category') 
-data["status"] = data["status"].astype('category') 
-data["hsc_s"] = data["hsc_s"].astype('category') 
+print(data.head())
 
-data["gender"] = data["gender"].cat.codes 
-data["ssc_b"] = data["ssc_b"].cat.codes 
-data["hsc_b"] = data["hsc_b"].cat.codes 
-data["degree_t"] = data["degree_t"].cat.codes 
-data["workex"] = data["workex"].cat.codes 
-data["specialisation"] = data["specialisation"].cat.codes 
-data["status"] = data["status"].cat.codes 
-data["hsc_s"] = data["hsc_s"].cat.codes 
+data1 = data.copy()
+data1 = data1.drop(["sl_no", "salary"], axis=1)
 
-x = data.iloc[:, :-1].values 
-y = data.iloc[:, -1].values 
+print(data1.isnull().sum())
 
-theta = np.random.randn(x.shape[1]) 
-Y = y 
+print(data1.duplicated().sum())
 
-def sigmoid(z): 
-    return 1 / (1 + np.exp(-z)) 
+le = LabelEncoder()
+categorical_cols = ["gender", "ssc_b", "hsc_b", "hsc_s", "degree_t", "workex", "specialisation", "status"]
+for col in categorical_cols:
+    data1[col] = le.fit_transform(data1[col])
 
-def loss(theta, X, y): 
-    h = sigmoid(X.dot(theta)) 
-    return -np.sum(y * np.log(h) + (1 - y) * np.log(1 - h)) 
+X = data1.iloc[:, :-1]
+y = data1["status"]
 
-def gradient_descent(theta, X, y, alpha, num_iterations): 
-    m = len(y) 
-    for i in range(num_iterations): 
-        h = sigmoid(X.dot(theta)) 
-        gradient = X.T.dot(h - y) / m 
-        theta -= alpha * gradient 
-    return theta 
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
-theta = gradient_descent(theta, x, y, alpha=0.01, num_iterations=1000) 
+lr = LogisticRegression(solver="liblinear")
+lr.fit(X_train, y_train)
 
-def predict(theta, X): 
-    h = sigmoid(X.dot(theta)) 
-    y_pred = np.where(h >= 0.5, 1, 0) 
-    return y_pred 
+y_pred = lr.predict(X_test)
 
-y_pred = predict(theta, x) 
-accuracy = np.mean(y_pred.flatten() == y) 
-print("Accuracy: ", accuracy) 
-print(y_pred)
+accuracy = accuracy_score(y_test, y_pred)
+print("Accuracy:", accuracy)
 
-xnew = np.array([[0, 87, 0, 95, 0, 2, 78, 2, 0, 0, 1, 0]]) 
-y_prednew = predict(theta, xnew) 
-print(y_prednew) 
+classification_report1 = classification_report(y_test, y_pred)
+print("Classification Report:\n", classification_report1)
 
-xnew = np.array([[0, 0, 0, 0, 0, 2, 8, 2, 0, 0, 1, 0]]) 
-y_prednew = predict(theta, xnew) 
-print(y_prednew)
+sample_input = [[1, 80, 1, 90, 1, 1, 90, 1, 0, 85, 1, 85]]
+sample_prediction = lr.predict(sample_input)
+print("Sample Prediction:", sample_prediction)
+
 ```
 
 ## Output:
-![image](https://github.com/user-attachments/assets/6d7ecc26-29a1-47cb-8bb5-eb5b6d31a029)
+![image](https://github.com/user-attachments/assets/24e06126-ffb3-4ca4-b0ce-2daaf0990d3f)
+![image](https://github.com/user-attachments/assets/d68d05c8-64d7-4c35-88c6-2b1dc768671c)
+
+## Result:
+Thus the program to implement the the Logistic Regression Model to Predict the Placement Status of Student is written and verified using python programming.
+
 
 
 
